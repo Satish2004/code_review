@@ -1,0 +1,76 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Set a base font size and line height */
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+}
+main {
+  display: flex;
+  height: 100vh; /* Full height */
+  background: #313034;
+}
+main .left,
+main .right {
+  display: flex;
+  /* justify-content: center; */
+  /* align-items: center; */
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 30px;
+}
+.left {
+  width: 50%;
+  /* background-color: #201f1f; Optional styling */
+  border: 2px solid #8c8a8a;
+  padding: 1rem;
+  position: relative;
+}
+
+.right {
+  width: 50%;
+  background-color: #454545; /* Optional styling */
+  border: 2px solid #e8dcdc; /* Optional styling */
+  padding: 10px;
+  overflow: auto;
+}
+main .left .reviewBtn {
+  color: #181818;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background: white;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  font-weight: bold;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: linear 0.3s;
+}
+main .left .reviewBtn:hover {
+  background: rgb(156, 154, 154);
+}
+main .left .codeSection {
+  width: 100%;
+  height: 100%;
+  /* padding: 1rem; */
+  /* overflow: hidden; */
+  /* border-radius: 10px; */
+}
+.left .codeSection,
+.codeSection pre,
+.codeSection pre code {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border-radius: 10px;
+}
