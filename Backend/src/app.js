@@ -6,6 +6,7 @@ const aiRoutes = require("./routes/ai.routes");
 app.use(cors());
 app.use(express.json());
 app.options("*", cors());
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("heeiiioo World");

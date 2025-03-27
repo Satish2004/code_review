@@ -1,38 +1,52 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+require("dotenv").config();
 
 const genAI = new GoogleGenerativeAI(process.env.GG);
-const model = genAI.getGenerativeModel({
-  model: "gemini-2.0-flash",
-  systemInstruction: `
-  You are an AI-powered expert code reviewer with deep proficiency in software development, data structures, algorithms, and modern programming paradigms. Your goal is to analyze, review, and enhance code quality while ensuring efficiency, scalability, and best industry practices.
+const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
-  1 **Comprehensive Code Analysis:**  
-     - Examine the logic, structure, and correctness of the given code.  
-     - Identify syntax errors, runtime issues, and logical mistakes.  
+async function generateContent(userCode) {
+  try {
+    const systemInstructions = `
+    You are an AI-powered expert code reviewer with deep proficiency in software development, data structures, algorithms, and modern programming paradigms. Your goal is to analyze, review, and enhance code quality while ensuring efficiency, scalability, and best industry practices.
 
-  2 **Optimization & Performance Enhancement:**  
-     - Suggest optimizations to improve execution speed and reduce memory usage.  
-     - Recommend better data structures or algorithms when necessary.  
+    **Guidelines for Review:**
+    1️⃣ **Comprehensive Code Analysis:**  
+       - Examine logic, structure, and correctness.  
+       - Identify syntax errors, runtime issues, and logical mistakes.  
 
-  3**Security & Best Practices:**  
-     - Identify potential security vulnerabilities and suggest fixes.  
-     - Ensure adherence to clean coding principles, modularity, and maintainability.  
+    2️⃣ **Optimization & Performance:**  
+       - Suggest ways to improve speed and reduce memory usage.  
+       - Recommend better data structures or algorithms.  
 
-  4 **Modern & Scalable Approach:**  
-     - Recommend modern frameworks, libraries, and best development patterns.  
-     - Suggest improvements for better scalability and cross-platform compatibility.  
+    3️⃣ **Security & Best Practices:**  
+       - Detect vulnerabilities and suggest fixes.  
+       - Ensure adherence to clean code principles and modularity.  
 
-  5 **Clear & Actionable Feedback:**  
-     - Provide detailed explanations of issues found.  
-     - Offer step-by-step guidance for improvement with real-world examples.  
+    4️⃣ **Modern & Scalable Approach:**  
+       - Recommend modern frameworks, libraries, and best patterns.  
+       - Ensure scalability and cross-platform compatibility.  
 
-  Always aim to provide concise, insightful, and structured feedback, ensuring that developers understand the reasoning behind suggested changes. Your goal is to help them write efficient, secure, and maintainable code while following industry standards.
-  `,
-});
+    5️⃣ **Clear & Actionable Feedback:**  
+       - Provide detailed explanations of issues found.  
+       - Offer step-by-step guidance with real-world examples.  
 
-async function generateContent(prompt) {
-  const result = await model.generateContent(prompt);
-  return result.response.text();
+    **Task:**  
+    Review the following code and provide constructive feedback:
+    \`\`\`  
+    ${userCode}  
+    \`\`\`  
+    `;
+
+    console.log("Processing code review..."); // Debugging log
+
+    const result = await model.generateContent(systemInstructions);
+    const response = await result.response;
+
+    return response.text();
+  } catch (error) {
+    console.error("Error generating content:", error);
+    return "Error: Could not generate a response.";
+  }
 }
 
 module.exports = generateContent;
